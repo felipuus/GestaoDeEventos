@@ -1,0 +1,27 @@
+﻿<Window x:Class="GestaoDeEventos.MainWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:GestaoDeEventos"
+        mc:Ignorable="d"
+        Title="Gestão de Eventos" Height="450" Width="800" ResizeMode="NoResize" WindowStartupLocation="CenterScreen" Icon="/ChatGPT Image 16 de set. de 2025, 14_26_26.png">
+    <Grid  Width="800" Margin="0,0,0,-6">
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="309*"/>
+            <ColumnDefinition Width="91*"/>
+        </Grid.ColumnDefinitions>
+
+        <Grid.Background>
+            <LinearGradientBrush StartPoint="0,0" EndPoint="0,1">
+                <GradientStop Color="#4A69BD" Offset="0"/>
+                <GradientStop Color="#FF27549E" Offset="1"/>
+            </LinearGradientBrush>
+        </Grid.Background>
+        <Button x:Name="bttelaeventos" Content="Eventos" HorizontalAlignment="Left" Height="39" Margin="1,10,0,0" VerticalAlignment="Top" Width="99" Background="#38ada9" Cursor="Hand" Foreground="Black" Click="bttelaeventos_Click"/>
+        <Button x:Name="bttelafornecedores" Content="Fornecedores" HorizontalAlignment="Left" Height="39" Margin="141,10,0,0" VerticalAlignment="Top" Width="99" Background="#38ada9" Cursor="Hand"/>
+        <Button x:Name="bttelaconsultarcep" Content="Consultar CEP" HorizontalAlignment="Left" Height="39" Margin="281,10,0,0" VerticalAlignment="Top" Width="99" Background="#38ada9" Cursor="Hand" Click="bttelaconsultarcep_Click"/>
+        <Button x:Name="bttelaparticipante" Content="Participantes" HorizontalAlignment="Left" Height="39" Margin="422,10,0,0" VerticalAlignment="Top" Width="99" Background="#38ada9" Cursor="Hand"  />
+        <Image HorizontalAlignment="Left" Height="334" VerticalAlignment="Top" Width="500" Source="/Logo de Sistema de Eventos.png" Margin="150,62,0,0" Grid.ColumnSpan="2"/>
+    </Grid>
+</Window>

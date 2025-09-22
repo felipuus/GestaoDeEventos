@@ -1,0 +1,28 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <OutputType>WinExe</OutputType>
+    <TargetFramework>net8.0-windows</TargetFramework>
+    <Nullable>enable</Nullable>
+    <ImplicitUsings>enable</ImplicitUsings>
+    <UseWPF>true</UseWPF>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <None Remove="1fb9bdf7-428a-41f2-9494-41b1503d1762.png" />
+    <None Remove="ChatGPT Image 16 de set. de 2025, 14_26_26.png" />
+    <None Remove="Logo de Sistema de Eventos.png" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <PackageReference Include="Newtonsoft.Json" Version="13.0.4" />
+    <PackageReference Include="System.Data.SqlClient" Version="4.9.0" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Resource Include="1fb9bdf7-428a-41f2-9494-41b1503d1762.png" />
+    <Resource Include="ChatGPT Image 16 de set. de 2025, 14_26_26.png" />
+    <Resource Include="Logo de Sistema de Eventos.png" />
+  </ItemGroup>
+
+</Project>
