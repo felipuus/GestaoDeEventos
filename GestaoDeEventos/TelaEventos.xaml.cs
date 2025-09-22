@@ -1023,6 +1023,7 @@ namespace GestaoDeEventos
                             // Se algo falhar, desfaz tudo
                             trans.Rollback();
                             MessageBox.Show("Erro ao excluir evento: " + ex.Message, "Erro", MessageBoxButton.OK, MessageBoxImage.Error);
+                        
                         }
                     }
                 }
