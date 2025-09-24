@@ -1003,6 +1003,40 @@ namespace GestaoDeEventos
                 INSERT INTO parteventos (cod_event, cod_part, DataCadastro, Data_Evento,Data_Fim_Evento)
                 VALUES (@cod_event, @cod_partev, @DataCadastro, @Data_Evento,@Data_Fim_Evento)";
 
+
+                    DateTime novoInicio = dpdatadoevent.SelectedDate.Value;
+                    DateTime novoFim = dpdatadoevent_ate.SelectedDate.Value;
+
+                    foreach (var item in lbParticipantes.SelectedItems.Cast<DataRowView>())
+                    {
+                        string codParticipante = item["CPF_CNPJ"].ToString();
+
+                        string sqlCheckConflito = @"
+        SELECT COUNT(*)
+        FROM parteventos p
+        INNER JOIN Eventos e ON p.cod_event = e.Cod_Evento
+        WHERE p.cod_part = @cod_part
+          AND e.Cod_Evento <> @cod_event -- ignora o evento atual
+          AND e.Data_Evento <= @novoFim
+          AND e.Data_Fim_Evento >= @novoInicio";
+
+                        using (SqlCommand cmdCheck = new SqlCommand(sqlCheckConflito, con))
+                        {
+                            cmdCheck.Parameters.AddWithValue("@cod_part", codParticipante);
+                            cmdCheck.Parameters.AddWithValue("@cod_event", codEvento);
+                            cmdCheck.Parameters.AddWithValue("@novoInicio", novoInicio);
+                            cmdCheck.Parameters.AddWithValue("@novoFim", novoFim);
+
+                            int conflito = (int)cmdCheck.ExecuteScalar();
+                            if (conflito > 0)
+                            {
+                                MessageBox.Show($"O participante {item["Nome"]} já está em outro evento no mesmo período!");
+                                return; // sai sem salvar nada
+                            }
+                        }
+                    }
+
+
                     foreach (var item in lbParticipantes.SelectedItems.Cast<DataRowView>())
                     {
                         using (SqlCommand cmdPart = new SqlCommand(sqlInsertParticipantes, con))
