@@ -112,6 +112,9 @@
         <Label x:Name="lbtvalortotal" Content="Valor total:" HorizontalAlignment="Left" Height="24" Margin="4,88,0,0" VerticalAlignment="Top" Width="87" FontWeight="Bold" Foreground="#FFFDFDFD" Grid.Column="3"/>
         <Label x:Name="lbtvalortotal_Copiar" Content="Total Part." HorizontalAlignment="Left" Height="24" Margin="4,129,0,0" VerticalAlignment="Top" Width="87" FontWeight="Bold" Foreground="#FFFDFDFD" Grid.Column="3"/>
         <TextBox x:Name="valortotalpartic" HorizontalAlignment="Left" Margin="80,129,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="93" Height="30" Grid.Column="3" Background="#FF0AF50E" FontWeight="Bold" IsEnabled="False"/>
-        <DatePicker x:Name="dpdatadoevent" HorizontalAlignment="Left" Margin="113,265,0,0" VerticalAlignment="Top" Width="111" Grid.ColumnSpan="2" Height="23" Grid.Column="1"/>
+        <DatePicker x:Name="dpdatadoevent" Margin="349,266,0,0" VerticalAlignment="Top" Grid.ColumnSpan="2" Height="23" HorizontalAlignment="Left" Width="116"/>
+        <DatePicker x:Name="dpdatadoevent_ate" HorizontalAlignment="Right" Margin="0,266,7,0" VerticalAlignment="Top" Width="110" Grid.ColumnSpan="2" Height="23" Grid.Column="1"/>
+        <Label Content="De" HorizontalAlignment="Left" Height="24" Margin="318,264,0,0" VerticalAlignment="Top" Width="31" FontWeight="Bold" Foreground="#FFFDFDFD"/>
+        <Label Content="Até" HorizontalAlignment="Left" Height="24" Margin="75,265,0,0" VerticalAlignment="Top" Width="30" FontWeight="Bold" Foreground="#FFFDFDFD" Grid.Column="1"/>
     </Grid>
 </Window>

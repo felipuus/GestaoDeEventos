@@ -120,6 +120,7 @@ namespace GestaoDeEventos
 
             // Limpar DatePicker
             dpdatadoevent.SelectedDate = null;
+            dpdatadoevent_ate.SelectedDate = null;
 
             // Limpar ListBoxes selecionados
             lbFornecedores.UnselectAll();
@@ -424,161 +425,245 @@ namespace GestaoDeEventos
 
         private void btcriareventos_Click(object sender, RoutedEventArgs e)
         {
+
+            DateTime novoInicio = dpdatadoevent.SelectedDate.Value;
+            DateTime novoFim = dpdatadoevent_ate.SelectedDate.Value;
+
+            if (decimal.TryParse(valortotal.Text, out decimal totalvlcr) &&
+            decimal.TryParse(orcamentotleventos.Text, out decimal orcamentovlcr))
+            {
+                if (totalvlcr > orcamentovlcr)
+                {
+                    MessageBox.Show("O valor total dos fornecedores ultrapassa o orçamento máximo permitido!");
+                    return; 
+                }
+            }
+
+            // Validação de lotação antes de abrir a conexão
+            if (int.TryParse(valortotalpartic.Text, out int totalParticipantesvld) &&
+                int.TryParse(lotacaomaximatleven.Text, out int lotacaoMaximavld))
+            {
+                if (totalParticipantesvld > lotacaoMaximavld)
+                {
+                    MessageBox.Show("O total de participantes selecionados ultrapassa a lotação máxima do evento!");
+                    return; // sai do método, não cria o evento
+                }
+            }
+
+
             try
             {
                 using (SqlConnection con = Banco.GetConexao())
                 {
                     con.Open();
 
-                    string sqleventos = @"
-                INSERT INTO Eventos
-                (Nome_Evento, Cod_Tipo, Local, Numero_Local, CEP_Local,
-                 Lotacao_Maxima, Orcamento_Maximo, Total_Participantes,
-                 Valor_Total, Observacao,Data_Evento)
-                VALUES
-                (@Nome_Evento, @Cod_Tipo, @Local, @Numero_Local, @CEP_Local,
-                 @Lotacao_Maxima, @Orcamento_Maximo, @Total_Participantes,
-                 @Valor_Total, @Observacao,@Data_Evento);
-                SELECT SCOPE_IDENTITY();";
+                    // Inicia transação
+                    SqlTransaction transaction = con.BeginTransaction();
 
-                    int novoIdEvento;
-
-                    using (SqlCommand cmd = new SqlCommand(sqleventos, con))
+                    try
                     {
-                        // Nome do evento
-                        cmd.Parameters.AddWithValue("@Nome_Evento", txtnomedoevento.Text);
+                        string sqleventos = @"
+                    INSERT INTO Eventos
+                    (Nome_Evento, Cod_Tipo, Local, Numero_Local, CEP_Local,
+                     Lotacao_Maxima, Orcamento_Maximo, Total_Participantes,
+                     Valor_Total, Observacao, Data_Evento, Data_Fim_Evento)
+                    VALUES
+                    (@Nome_Evento, @Cod_Tipo, @Local, @Numero_Local, @CEP_Local,
+                     @Lotacao_Maxima, @Orcamento_Maximo, @Total_Participantes,
+                     @Valor_Total, @Observacao, @Data_Evento, @Data_Fim_Evento);
+                    SELECT SCOPE_IDENTITY();";
 
-                        // Tipo de evento (pega o código e não o nome!)
-                        if (cbtipoeventotleventos.SelectedValue == null)
+                        int novoIdEvento;
+
+                        // ==== INSERT EVENTO ====
+                        using (SqlCommand cmd = new SqlCommand(sqleventos, con, transaction))
                         {
-                            MessageBox.Show("Selecione um tipo de evento.");
-                            return;
-                        }
-                        cmd.Parameters.AddWithValue("@Cod_Tipo", cbtipoeventotleventos.SelectedValue);
+                            // Nome do evento
+                            cmd.Parameters.AddWithValue("@Nome_Evento", txtnomedoevento.Text);
 
-                        // Local
-                        cmd.Parameters.AddWithValue("@Local", TxtEnderecoEvent1.Text);
-                        cmd.Parameters.AddWithValue("@Numero_Local", TxtEnderecoEventNumero.Text);
-                        cmd.Parameters.AddWithValue("@CEP_Local", TxtInforCepEventos.Text);
-
-                        // Lotação
-                        if (!int.TryParse(lotacaomaximatleven.Text, out int lotacao))
-                            lotacao = 0;
-                        cmd.Parameters.AddWithValue("@Lotacao_Maxima", lotacao);
-
-                        // Orçamento
-                        if (!decimal.TryParse(orcamentotleventos.Text, out decimal orcamento))
-                            orcamento = 0;
-                        cmd.Parameters.AddWithValue("@Orcamento_Maximo", orcamento);
-
-                        // Total participantes
-                        if (!int.TryParse(valortotalpartic.Text, out int totalParticipantes))
-                            totalParticipantes = 0;
-                        cmd.Parameters.AddWithValue("@Total_Participantes", totalParticipantes);
-
-                        // Valor total fornecedores
-                        if (!decimal.TryParse(valortotal.Text, out decimal valorTotal))
-                            valorTotal = 0;
-                        cmd.Parameters.AddWithValue("@Valor_Total", valorTotal);
-
-                        // Data do Evento
-
-                        DateTime dataEvento;
-                        if (dpdatadoevent.SelectedDate.HasValue)
-                        {
-                            dataEvento = dpdatadoevent.SelectedDate.Value;
-                        }
-                        else
-                        {
-                            MessageBox.Show("Selecione uma data válida para o evento.");
-                            return;
-                        }
-                        cmd.Parameters.AddWithValue("@Data_Evento", dataEvento);
-
-                        // Observação
-                        cmd.Parameters.AddWithValue("@Observacao", txtobs.Text);
-
-                        // Executa e pega o ID do evento criado
-                        novoIdEvento = Convert.ToInt32(cmd.ExecuteScalar());
-                    }
-
-                    //agora insere os participante do evento
-
-                    string sqlParticipantes = @"
-                          INSERT INTO parteventos (cod_event, cod_part, DataCadastro,Data_Evento) 
-                          VALUES (@cod_event, @cod_partev, @DataCadastro,@Data_Evento)";
-
-                    foreach (var item in lbParticipantes.SelectedItems.Cast<DataRowView>())
-                    {
-                        using (SqlCommand cmdPart = new SqlCommand(sqlParticipantes, con))
-                        {
-                            // Relaciona com o evento recém-criado
-                            cmdPart.Parameters.AddWithValue("@cod_event", novoIdEvento);
-
-                            // Código do participante (assumindo que o DataTable tem coluna "Cod_Part")
-                            cmdPart.Parameters.AddWithValue("@cod_partev", item["CPF_CNPJ"]);
-
-
-                            if (dpdatadoevent.SelectedDate.HasValue)
+                            // Tipo de evento
+                            if (cbtipoeventotleventos.SelectedValue == null)
                             {
-                                cmdPart.Parameters.AddWithValue("@Data_Evento", dpdatadoevent.SelectedDate.Value);
+                                MessageBox.Show("Selecione um tipo de evento.");
+                                return;
+                            }
+                            cmd.Parameters.AddWithValue("@Cod_Tipo", cbtipoeventotleventos.SelectedValue);
+
+                            // Local
+                            cmd.Parameters.AddWithValue("@Local", TxtEnderecoEvent1.Text);
+                            cmd.Parameters.AddWithValue("@Numero_Local", TxtEnderecoEventNumero.Text);
+                            cmd.Parameters.AddWithValue("@CEP_Local", TxtInforCepEventos.Text);
+
+                            // Lotação
+                            if (!int.TryParse(lotacaomaximatleven.Text, out int lotacao))
+                                lotacao = 0;
+                            cmd.Parameters.AddWithValue("@Lotacao_Maxima", lotacao);
+
+                            // Orçamento
+                            if (!decimal.TryParse(orcamentotleventos.Text, out decimal orcamento))
+                                orcamento = 0;
+                            cmd.Parameters.AddWithValue("@Orcamento_Maximo", orcamento);
+
+                            // Total participantes
+                            if (!int.TryParse(valortotalpartic.Text, out int totalParticipantes))
+                                totalParticipantes = 0;
+                            cmd.Parameters.AddWithValue("@Total_Participantes", totalParticipantes);
+
+                            // Valor total fornecedores
+                            if (!decimal.TryParse(valortotal.Text, out decimal valorTotal))
+                                valorTotal = 0;
+                            cmd.Parameters.AddWithValue("@Valor_Total", valorTotal);
+
+                            // Data do Evento
+
+                            if (dpdatadoevent.SelectedDate.HasValue && dpdatadoevent_ate.SelectedDate.HasValue)
+                            {
+                                DateTime dataInicio = dpdatadoevent.SelectedDate.Value;
+                                DateTime dataFim = dpdatadoevent_ate.SelectedDate.Value;
+
+                                if (dataFim < dataInicio)
+                                {
+                                    MessageBox.Show("A data de término não pode ser menor que a data de início do evento.");
+                                    return;
+                                }
                             }
                             else
                             {
-                                // lidar com caso de data não selecionada
-                                cmdPart.Parameters.AddWithValue("@Data_Evento", DBNull.Value);
+                                MessageBox.Show("Selecione as duas datas (início e fim) do evento.");
+                                return;
                             }
 
+                            DateTime dataEvento;
+                            if (dpdatadoevent.SelectedDate.HasValue)
+                            {
+                                dataEvento = dpdatadoevent.SelectedDate.Value;
+                            }
+                            else
+                            {
+                                MessageBox.Show("Selecione uma data válida para o evento.");
+                                return;
+                            }
+                            cmd.Parameters.AddWithValue("@Data_Evento", dataEvento);
 
+                            // Data Fim do Evento
+                            DateTime dataEventoFim;
+                            if (dpdatadoevent_ate.SelectedDate.HasValue)
+                            {
+                                dataEventoFim = dpdatadoevent_ate.SelectedDate.Value;
+                            }
+                            else
+                            {
+                                MessageBox.Show("Selecione uma data válida para o fim do evento.");
+                                return;
+                            }
+                            cmd.Parameters.AddWithValue("@Data_Fim_Evento", dataEventoFim);
 
+                            // Observação
+                            cmd.Parameters.AddWithValue("@Observacao", txtobs.Text);
 
-                            // Data do cadastro
-                            cmdPart.Parameters.AddWithValue("@DataCadastro", DateTime.Now);
-
-                            // Executa o insert
-                            cmdPart.ExecuteNonQuery();
+                            // Executa insert de Evento e pega o ID
+                            novoIdEvento = Convert.ToInt32(cmd.ExecuteScalar());
                         }
-                    }
 
-                    // Agora insere os fornecedores do evento
-                    string sqlforne = @"
-                INSERT INTO foreventos (cod_event, cod_forn, Preco_forn, DataCadastro) 
-                VALUES (@cod_event, @cod_forn, @Preco_forn, @DataCadastro)";
-
-                    foreach (var item in lbFornecedores.SelectedItems.Cast<DataRowView>())
-                    {
-                        using (SqlCommand cmdFor = new SqlCommand(sqlforne, con))
+                        foreach (var item in lbParticipantes.SelectedItems.Cast<DataRowView>())
                         {
-                            cmdFor.Parameters.AddWithValue("@cod_event", novoIdEvento);
+                            string codParticipante = item["CPF_CNPJ"].ToString();
 
-                            // Aqui estou assumindo que o fornecedor tem um campo "cpf_cnpj" na tabela
-                            cmdFor.Parameters.AddWithValue("@cod_forn", item["cpf_cnpj"]);
+                            // Checa se o participante já está em outro evento nesse período
+                            string sqlCheckConflito = @"
+        SELECT COUNT(*) 
+        FROM parteventos p
+        INNER JOIN Eventos e ON p.cod_event = e.Cod_Evento
+        WHERE p.cod_part = @cod_part
+          AND e.Data_Evento <= @novoFim
+          AND e.Data_Fim_Evento >= @novoInicio";
 
-                            // Se tiver preço associado
-                            if (!decimal.TryParse(item["Preco"].ToString(), out decimal preco))
-                                preco = 0;
-                            cmdFor.Parameters.AddWithValue("@Preco_forn", preco);
+                            using (SqlCommand cmdCheck = new SqlCommand(sqlCheckConflito, con, transaction))
+                            {
+                                cmdCheck.Parameters.AddWithValue("@cod_part", codParticipante);
+                                cmdCheck.Parameters.AddWithValue("@novoInicio", novoInicio);
+                                cmdCheck.Parameters.AddWithValue("@novoFim", novoFim);
 
-                            cmdFor.Parameters.AddWithValue("@DataCadastro", DateTime.Now);
-
-                            cmdFor.ExecuteNonQuery();
+                                int conflito = (int)cmdCheck.ExecuteScalar();
+                                if (conflito > 0)
+                                {
+                                    MessageBox.Show($"O participante {item["Nome"]} já está cadastrado em outro evento nesse período!");
+                                    transaction.Rollback(); // cancela tudo
+                                    return; // sai do método
+                                }
+                            }
                         }
+
+
+                        // ==== PARTICIPANTES ====
+                        string sqlParticipantes = @"
+                    INSERT INTO parteventos (cod_event, cod_part, DataCadastro, Data_Evento, Data_Fim_Evento) 
+                    VALUES (@cod_event, @cod_partev, @DataCadastro, @Data_Evento, @Data_Fim_Evento)";
+
+                        foreach (var item in lbParticipantes.SelectedItems.Cast<DataRowView>())
+                        {
+                            using (SqlCommand cmdPart = new SqlCommand(sqlParticipantes, con, transaction))
+                            {
+                                cmdPart.Parameters.AddWithValue("@cod_event", novoIdEvento);
+                                cmdPart.Parameters.AddWithValue("@cod_partev", item["CPF_CNPJ"]);
+
+                                if (dpdatadoevent.SelectedDate.HasValue)
+                                    cmdPart.Parameters.AddWithValue("@Data_Evento", dpdatadoevent.SelectedDate.Value);
+                                else
+                                    cmdPart.Parameters.AddWithValue("@Data_Evento", DBNull.Value);
+
+                                if (dpdatadoevent_ate.SelectedDate.HasValue)
+                                    cmdPart.Parameters.AddWithValue("@Data_Fim_Evento", dpdatadoevent_ate.SelectedDate.Value);
+                                else
+                                    cmdPart.Parameters.AddWithValue("@Data_Fim_Evento", DBNull.Value);
+
+                                cmdPart.Parameters.AddWithValue("@DataCadastro", DateTime.Now);
+
+                                cmdPart.ExecuteNonQuery();
+                            }
+                        }
+
+                        // ==== FORNECEDORES ====
+                        string sqlforne = @"
+                    INSERT INTO foreventos (cod_event, cod_forn, Preco_forn, DataCadastro) 
+                    VALUES (@cod_event, @cod_forn, @Preco_forn, @DataCadastro)";
+
+                        foreach (var item in lbFornecedores.SelectedItems.Cast<DataRowView>())
+                        {
+                            using (SqlCommand cmdFor = new SqlCommand(sqlforne, con, transaction))
+                            {
+                                cmdFor.Parameters.AddWithValue("@cod_event", novoIdEvento);
+                                cmdFor.Parameters.AddWithValue("@cod_forn", item["cpf_cnpj"]);
+
+                                if (!decimal.TryParse(item["Preco"].ToString(), out decimal preco))
+                                    preco = 0;
+                                cmdFor.Parameters.AddWithValue("@Preco_forn", preco);
+
+                                cmdFor.Parameters.AddWithValue("@DataCadastro", DateTime.Now);
+
+                                cmdFor.ExecuteNonQuery();
+                            }
+                        }
+
+                        // ==== FINALIZA ====
+                        transaction.Commit();
+                        MessageBox.Show("Evento cadastrado com sucesso!");
+                        apagartudo();
                     }
-
-                    MessageBox.Show("Evento cadastrados com sucesso!");
-
-                    apagartudo();
-
-
-
-
+                    catch (Exception ex)
+                    {
+                        // Se der erro, desfaz tudo
+                        transaction.Rollback();
+                        MessageBox.Show("Erro ao criar evento: " + ex.Message);
+                    }
                 }
             }
             catch (Exception ex)
             {
-                MessageBox.Show("Erro ao criar evento: " + ex.Message);
+                MessageBox.Show("Erro de conexão: " + ex.Message);
             }
         }
+
 
         private void btconsultareventos_Click(object sender, RoutedEventArgs e)
         {
@@ -654,6 +739,7 @@ namespace GestaoDeEventos
                                 valortotal.Text = reader["Valor_Total"].ToString();
                                 txtobs.Text = reader["Observacao"].ToString();
                                 dpdatadoevent.SelectedDate = Convert.ToDateTime(reader["Data_Evento"]);
+                                dpdatadoevent_ate.SelectedDate = Convert.ToDateTime(reader["Data_Fim_Evento"]);
 
                                 // Carrega fornecedores vinculados ao evento
                                 CarregarFornecedoresDoEvento(codEvento);
@@ -798,7 +884,29 @@ namespace GestaoDeEventos
                 return;
             }
 
+            // Validação de lotação antes de abrir a conexão
+            if (int.TryParse(valortotalpartic.Text, out int totalParticipantesvld) &&
+                int.TryParse(lotacaomaximatleven.Text, out int lotacaoMaximavld))
+            {
+                if (totalParticipantesvld > lotacaoMaximavld)
+                {
+                    MessageBox.Show("O total de participantes selecionados ultrapassa a lotação máxima do evento!");
+                    return; // sai do método, não cria o evento
+                }
+            }
+
             int codEvento = Convert.ToInt32(lbEventos.SelectedValue);
+
+            if (decimal.TryParse(valortotal.Text, out decimal totalvl) &&
+            decimal.TryParse(orcamentotleventos.Text, out decimal orcamentovl))
+            {
+                if (totalvl > orcamentovl)
+                {
+                    MessageBox.Show("O valor total dos fornecedores ultrapassa o orçamento máximo permitido!");
+                    return; 
+                }
+            }
+
 
             try
             {
@@ -819,7 +927,8 @@ namespace GestaoDeEventos
                     Total_Participantes = @Total_Participantes,
                     Valor_Total = @Valor_Total,
                     Observacao = @Observacao,
-                    Data_Evento = @Data_Evento
+                    Data_Evento = @Data_Evento,
+                    Data_Fim_Evento = @Data_Fim_Evento
                 WHERE Cod_Evento = @Cod_Evento";
 
                     using (SqlCommand cmd = new SqlCommand(sqlUpdateEvento, con))
@@ -849,11 +958,35 @@ namespace GestaoDeEventos
 
                         cmd.Parameters.AddWithValue("@Observacao", txtobs.Text);
 
+                        if (dpdatadoevent.SelectedDate.HasValue && dpdatadoevent_ate.SelectedDate.HasValue)
+                        {
+                            DateTime dataInicio = dpdatadoevent.SelectedDate.Value;
+                            DateTime dataFim = dpdatadoevent_ate.SelectedDate.Value;
+
+                            if (dataFim < dataInicio)
+                            {
+                                MessageBox.Show("A data de término não pode ser menor que a data de início do evento.");
+                                return;
+                            }
+                        }
+                        else
+                        {
+                            MessageBox.Show("Selecione as duas datas (início e fim) do evento.");
+                            return;
+                        }
+
+
                         // Ajuste para Data_Evento nula
                         object dataEventoParam = dpdatadoevent.SelectedDate.HasValue
                             ? (object)dpdatadoevent.SelectedDate.Value
                             : DBNull.Value;
                         cmd.Parameters.AddWithValue("@Data_Evento", dataEventoParam);
+
+                        // Ajuste para Data_Fim_Evento nula
+                        object dataFimEventoParam = dpdatadoevent_ate.SelectedDate.HasValue
+                            ? (object)dpdatadoevent_ate.SelectedDate.Value
+                            : DBNull.Value;
+                        cmd.Parameters.AddWithValue("@Data_Fim_Evento", dataFimEventoParam);
 
                         cmd.ExecuteNonQuery();
                     }
@@ -867,8 +1000,8 @@ namespace GestaoDeEventos
                     }
 
                     string sqlInsertParticipantes = @"
-                INSERT INTO parteventos (cod_event, cod_part, DataCadastro, Data_Evento)
-                VALUES (@cod_event, @cod_partev, @DataCadastro, @Data_Evento)";
+                INSERT INTO parteventos (cod_event, cod_part, DataCadastro, Data_Evento,Data_Fim_Evento)
+                VALUES (@cod_event, @cod_partev, @DataCadastro, @Data_Evento,@Data_Fim_Evento)";
 
                     foreach (var item in lbParticipantes.SelectedItems.Cast<DataRowView>())
                     {
@@ -880,6 +1013,10 @@ namespace GestaoDeEventos
                             object dataEventoPart = dpdatadoevent.SelectedDate.HasValue
                                 ? (object)dpdatadoevent.SelectedDate.Value
                                 : DBNull.Value;
+                            object dataFimEventoPart = dpdatadoevent_ate.SelectedDate.HasValue
+                                ? (object)dpdatadoevent_ate.SelectedDate.Value
+                                : DBNull.Value;
+                            cmdPart.Parameters.AddWithValue("@Data_Fim_Evento", dataFimEventoPart);
                             cmdPart.Parameters.AddWithValue("@Data_Evento", dataEventoPart);
                             cmdPart.Parameters.AddWithValue("@DataCadastro", DateTime.Now);
 
