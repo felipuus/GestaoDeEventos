@@ -35,8 +35,6 @@ namespace GestaoDeEventos
 
         }
     }
-    /// <summary>
-    /// Lógica interna para Login.xaml
-    /// </summary>
+   
 
 }

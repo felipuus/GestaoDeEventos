@@ -349,7 +349,7 @@ namespace GestaoDeEventos
                 using (SqlConnection con = Banco.GetConexao())
                 {
                     con.Open();
-                    // Seleciona os nomes dos fornecedores
+                    // Seleciona os nomes dos tipos
                     SqlCommand cmdselctforn = new SqlCommand("select Cod_Tipo, Nome_Tipo from TipoEvento", con);
                     SqlDataAdapter da = new SqlDataAdapter(cmdselctforn);
                     DataTable dt = new DataTable();

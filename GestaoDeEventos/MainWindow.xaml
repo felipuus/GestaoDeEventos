@@ -19,9 +19,9 @@
             </LinearGradientBrush>
         </Grid.Background>
         <Button x:Name="bttelaeventos" Content="Eventos" HorizontalAlignment="Left" Height="39" Margin="1,10,0,0" VerticalAlignment="Top" Width="99" Background="#38ada9" Cursor="Hand" Foreground="Black" Click="bttelaeventos_Click"/>
-        <Button x:Name="bttelafornecedores" Content="Fornecedores" HorizontalAlignment="Left" Height="39" Margin="141,10,0,0" VerticalAlignment="Top" Width="99" Background="#38ada9" Cursor="Hand"/>
-        <Button x:Name="bttelaconsultarcep" Content="Consultar CEP" HorizontalAlignment="Left" Height="39" Margin="281,10,0,0" VerticalAlignment="Top" Width="99" Background="#38ada9" Cursor="Hand" Click="bttelaconsultarcep_Click"/>
-        <Button x:Name="bttelaparticipante" Content="Participantes" HorizontalAlignment="Left" Height="39" Margin="422,10,0,0" VerticalAlignment="Top" Width="99" Background="#38ada9" Cursor="Hand"  />
+        <Button x:Name="bttelafornecedores" Content="Fornecedores" HorizontalAlignment="Left" Height="39" Margin="141,10,0,0" VerticalAlignment="Top" Width="99" Background="#38ada9" Cursor="Hand" Click="bttelafornecedores_Click"/>
+        <Button x:Name="bttelaparticipante" Content="Participantes" HorizontalAlignment="Left" Height="39" Margin="281,10,0,0" VerticalAlignment="Top" Width="99" Background="#38ada9" Cursor="Hand"  />
+        <Button x:Name="bttelarelatorios" Content="Relatorios" HorizontalAlignment="Left" Height="39" Margin="417,10,0,0" VerticalAlignment="Top" Width="99" Background="#38ada9" Cursor="Hand" />
         <Image HorizontalAlignment="Left" Height="334" VerticalAlignment="Top" Width="500" Source="/Logo de Sistema de Eventos.png" Margin="150,62,0,0" Grid.ColumnSpan="2"/>
     </Grid>
 </Window>

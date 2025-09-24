@@ -39,22 +39,19 @@ namespace GestaoDeEventos
             InitializeComponent();
         }
 
-        private void bttelaconsultarcep_Click(object sender, RoutedEventArgs e)
-        {
-            telabuscacep novaJanela = new telabuscacep();
-
-            novaJanela.Show();
-
-
-            
-
-        }
+        
 
         private void bttelaeventos_Click(object sender, RoutedEventArgs e)
         {
             TelaEventos abrirtelaeventos = new TelaEventos();
 
             abrirtelaeventos.Show();
+        }
+
+        private void bttelafornecedores_Click(object sender, RoutedEventArgs e)
+        {
+            Fornecedores abrirtelafornecedores = new Fornecedores();
+            abrirtelafornecedores.Show();
         }
     }
 }
