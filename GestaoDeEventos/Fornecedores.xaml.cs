@@ -132,13 +132,13 @@ namespace GestaoDeEventos
             }
         }
 
-        private void orcamentotleventos_TextChanged(object sender, TextChangedEventArgs e)
+        private void percoforn_TextChanged(object sender, TextChangedEventArgs e)
         {
             TextBox txt = sender as TextBox;
             if (txt == null) return;
 
             // Remove o evento para evitar loop
-            txt.TextChanged -= orcamentotleventos_TextChanged;
+            txt.TextChanged -= percoforn_TextChanged;
 
             // Remove tudo que não é número
             string onlyNumbers = Regex.Replace(txt.Text, @"[^\d]", "");
@@ -156,7 +156,7 @@ namespace GestaoDeEventos
             txt.CaretIndex = txt.Text.Length;
 
             // Reativa o evento
-            txt.TextChanged += orcamentotleventos_TextChanged;
+            txt.TextChanged += percoforn_TextChanged;
         }
 
         

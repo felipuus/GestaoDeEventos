@@ -53,5 +53,18 @@ namespace GestaoDeEventos
             Fornecedores abrirtelafornecedores = new Fornecedores();
             abrirtelafornecedores.Show();
         }
+
+        private void bttelaparticipante_Click(object sender, RoutedEventArgs e)
+        {
+            Participantes abrirtelaparticipantes = new Participantes();
+            abrirtelaparticipantes.Show();
+
+        }
+
+        private void bttelatipodeevento_Click(object sender, RoutedEventArgs e)
+        {
+            TipoDeEvento abrirtelatipodeevento = new TipoDeEvento();
+            abrirtelatipodeevento.Show();
+        }
     }
 }
