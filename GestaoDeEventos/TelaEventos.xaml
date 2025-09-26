@@ -20,7 +20,7 @@
         <Label Content="Lotação Máxima" HorizontalAlignment="Left" Height="24" Margin="2,265,0,0" VerticalAlignment="Top" Width="129" FontWeight="Bold" Foreground="#FFFDFDFD"/>
         <Label Content="Orçamento máximo R$" HorizontalAlignment="Left" Height="24" Margin="2,305,0,0" VerticalAlignment="Top" Width="145" FontWeight="Bold" Foreground="#FFFDFDFD"/>
         <Label Content="Observação" HorizontalAlignment="Left" Height="24" Margin="2,358,0,0" VerticalAlignment="Top" Width="129" FontWeight="Bold" Foreground="#FFFDFDFD"/>
-        <TextBox x:Name="txtnomedoevento" HorizontalAlignment="Left" Margin="139,43,0,0" TextWrapping="Wrap" Text="" VerticalAlignment="Top" Width="469" Height="24" Grid.ColumnSpan="3" PreviewMouseDown="txtnomedoevento_PreviewMouseDown_1" />
+        <TextBox x:Name="txtnomedoevento" HorizontalAlignment="Left" Margin="139,43,0,0" TextWrapping="Wrap" Text="" VerticalAlignment="Top" Width="469" Height="24" Grid.ColumnSpan="3" PreviewMouseDown="txtnomedoevento_PreviewMouseDown_1" MaxLength="48"/>
         <Popup x:Name="popupEventos" PlacementTarget="{Binding ElementName=txtnomedoevento}" Placement="Bottom" StaysOpen="True" AllowsTransparency="True" Grid.ColumnSpan="2">
             <Border BorderBrush="Gray" BorderThickness="1" Background="White">
                 <StackPanel>
@@ -79,7 +79,12 @@
                      ScrollViewer.VerticalScrollBarVisibility="Auto">
                         <ListBox.ItemTemplate>
                             <DataTemplate>
-                                <TextBlock Text="{Binding [Nome]}" Margin="2"/>
+                                <StackPanel Orientation="Horizontal" Margin="2">
+                                    <TextBlock Text="{Binding [Nome]}" Width="250"/>
+                                    <TextBlock Text=" Tipo: " FontWeight="Bold"/>
+                                    <TextBlock Text="{Binding [Tipo]}" />
+                                </StackPanel>
+
                             </DataTemplate>
                         </ListBox.ItemTemplate>
                     </ListBox>
@@ -93,13 +98,13 @@
         </Popup>
         <ComboBox x:Name="cbtipoeventotleventos" HorizontalAlignment="Left" Margin="139,163,0,0" VerticalAlignment="Top" Width="469" Height="24" IsEditable="True" IsTextSearchEnabled="True" StaysOpenOnEdit="True" Grid.ColumnSpan="3" />
         <TextBox x:Name="TxtEnderecoEvent1" HorizontalAlignment="Center" Margin="0,204,0,0" TextWrapping="Wrap" Text="" VerticalAlignment="Top" Width="260" Height="47" Grid.ColumnSpan="2" />
-        <TextBox x:Name="lotacaomaximatleven" HorizontalAlignment="Left" Margin="139,265,0,0" TextWrapping="Wrap" Text="" VerticalAlignment="Top" Width="174" Height="24" PreviewTextInput="TextBox_PreviewTextInput"  DataObject.Pasting="lotacaomaximatleven_Pasting" MaxLength="27" />
-        <TextBox x:Name="orcamentotleventos" HorizontalAlignment="Left" Margin="139,305,0,0" TextWrapping="Wrap" Text="0" VerticalAlignment="Top" Width="469" Height="24" PreviewTextInput="orcamentotleventos_PreviewTextInput"  TextChanged="orcamentotleventos_TextChanged" Grid.ColumnSpan="3" MaxLength="27" />
+        <TextBox x:Name="lotacaomaximatleven" HorizontalAlignment="Left" Margin="139,265,0,0" TextWrapping="Wrap" Text="" VerticalAlignment="Top" Width="174" Height="24" PreviewTextInput="TextBox_PreviewTextInput"  DataObject.Pasting="lotacaomaximatleven_Pasting" MaxLength="8" />
+        <TextBox x:Name="orcamentotleventos" HorizontalAlignment="Left" Margin="139,305,0,0" TextWrapping="Wrap" Text="0" VerticalAlignment="Top" Width="469" Height="24" PreviewTextInput="orcamentotleventos_PreviewTextInput"  TextChanged="orcamentotleventos_TextChanged" Grid.ColumnSpan="3" MaxLength="17" />
         <TextBox x:Name="txtobs" HorizontalAlignment="Left" Margin="139,345,0,0" TextWrapping="Wrap" Text="" VerticalAlignment="Top" Width="469" Height="62" Grid.ColumnSpan="3"/>
         <Label Content="N⁰" HorizontalAlignment="Left" Height="24" Margin="14,203,0,0" VerticalAlignment="Top" Width="25" FontWeight="Bold" Foreground="#FFFDFDFD" Grid.Column="1"/>
-        <TextBox x:Name="TxtEnderecoEventNumero" HorizontalAlignment="Left" Margin="44,203,0,0" TextWrapping="Wrap" Text="" VerticalAlignment="Top" Width="54" Height="24" Grid.Column="1" MaxLength="27"/>
+        <TextBox x:Name="TxtEnderecoEventNumero" HorizontalAlignment="Left" Margin="44,203,0,0" TextWrapping="Wrap" Text="" VerticalAlignment="Top" Width="54" Height="24" Grid.Column="1" MaxLength="7"/>
         <Label Content="CEP" HorizontalAlignment="Left" Margin="97,203,0,0" VerticalAlignment="Top" Width="31" FontWeight="Bold" Foreground="#FFFDFDFD" Grid.Column="1"/>
-        <TextBox x:Name="TxtInforCepEventos" HorizontalAlignment="Left" Margin="133,203,0,0" TextWrapping="Wrap" Text="" VerticalAlignment="Top" Width="84" Height="24" KeyDown="TxtInforCepEventos_KeyDown" Grid.ColumnSpan="2" Grid.Column="1" />
+        <TextBox x:Name="TxtInforCepEventos" HorizontalAlignment="Left" Margin="133,203,0,0" TextWrapping="Wrap" Text="" VerticalAlignment="Top" Width="84" Height="24" KeyDown="TxtInforCepEventos_KeyDown" Grid.ColumnSpan="2" Grid.Column="1" MaxLength="8"/>
         <Button x:Name="BtBuscarCepTlEv" Grid.Column="3" Content="Buscar" HorizontalAlignment="Left" Margin="10,203,0,0" VerticalAlignment="Top" Height="24" Width="66" Background="#38ada9" FontSize="14" Foreground="#FF080808" Cursor="Hand" Click="BtBuscarCepTlEv_Click" />
         <Label x:Name="lbcodigotleventos" Content="Codigo do Evento" HorizontalAlignment="Left" Height="24" VerticalAlignment="Top" Width="114" FontWeight="Bold" Foreground="#FFFDFDFD"/>
         <TextBox x:Name="txtcodigo" HorizontalAlignment="Left" Margin="119,3,0,0" TextWrapping="Wrap" Text="" VerticalAlignment="Top" Width="72" Height="21" IsEnabled="False"/>
@@ -108,10 +113,10 @@
         <Button x:Name="btcriareventos" Grid.Column="3" Content="Criar" HorizontalAlignment="Left" Margin="104,3,0,0" VerticalAlignment="Top" Height="25" Width="68" Background="#38ada9" FontSize="14" Foreground="#FF080808" Cursor="Hand" Click="btcriareventos_Click"/>
         <Button x:Name="btcancelar" Grid.Column="3" Content="Cancelar" HorizontalAlignment="Left" Margin="31,32,0,0" VerticalAlignment="Top" Height="25" Width="68" Background="#FFCC3E09" FontSize="14" Foreground="#FF080808" Cursor="Hand" Click="btcancelar_Click"/>
         <Button x:Name="btexcluir" Grid.Column="3" Content="Excluir" HorizontalAlignment="Left" Margin="104,32,0,0" VerticalAlignment="Top" Height="25" Width="68" Background="#FFCC3E09" FontSize="14" Foreground="#FF080808" Cursor="Hand" Click="excluir_Click"/>
-        <TextBox x:Name="valortotal" HorizontalAlignment="Left" Margin="80,83,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="93" Height="30" Grid.Column="3" Background="#FF0AF50E" FontWeight="Bold" IsEnabled="False"/>
-        <Label x:Name="lbtvalortotal" Content="Valor total:" HorizontalAlignment="Left" Height="24" Margin="4,88,0,0" VerticalAlignment="Top" Width="87" FontWeight="Bold" Foreground="#FFFDFDFD" Grid.Column="3"/>
-        <Label x:Name="lbtvalortotal_Copiar" Content="Total Part." HorizontalAlignment="Left" Height="24" Margin="4,129,0,0" VerticalAlignment="Top" Width="87" FontWeight="Bold" Foreground="#FFFDFDFD" Grid.Column="3"/>
-        <TextBox x:Name="valortotalpartic" HorizontalAlignment="Left" Margin="80,129,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="93" Height="30" Grid.Column="3" Background="#FF0AF50E" FontWeight="Bold" IsEnabled="False"/>
+        <TextBox x:Name="valortotal" HorizontalAlignment="Center" Margin="0,86,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="152" Height="38" Grid.Column="3" Background="#FF0AF50E" FontWeight="Bold" IsEnabled="False"/>
+        <Label x:Name="lbtvalortotal" Content="Valor total:" HorizontalAlignment="Center" Height="24" Margin="0,58,0,0" VerticalAlignment="Top" Width="86" Foreground="#FFFDFDFD" Grid.Column="3" FontWeight="Bold" FontFamily="Arial Black"/>
+        <Label x:Name="lbtvalortotal_Copiar" Content="Total Part." HorizontalAlignment="Left" Height="24" Margin="50,128,0,0" VerticalAlignment="Top" Width="88" FontWeight="Bold" Foreground="#FFFDFDFD" Grid.Column="3" FontFamily="Arial Black"/>
+        <TextBox x:Name="valortotalpartic" HorizontalAlignment="Center" Margin="0,157,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="150" Height="30" Grid.Column="3" Background="#FF0AF50E" FontWeight="Bold" IsEnabled="False"/>
         <DatePicker x:Name="dpdatadoevent" Margin="349,266,0,0" VerticalAlignment="Top" Grid.ColumnSpan="2" Height="23" HorizontalAlignment="Left" Width="116"/>
         <DatePicker x:Name="dpdatadoevent_ate" HorizontalAlignment="Right" Margin="0,266,7,0" VerticalAlignment="Top" Width="110" Grid.ColumnSpan="2" Height="23" Grid.Column="1"/>
         <Label Content="De" HorizontalAlignment="Left" Height="24" Margin="318,264,0,0" VerticalAlignment="Top" Width="31" FontWeight="Bold" Foreground="#FFFDFDFD"/>

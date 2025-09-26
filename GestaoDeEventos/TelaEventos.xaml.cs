@@ -433,6 +433,13 @@ namespace GestaoDeEventos
                 return;
             }
 
+            if (!dpdatadoevent.SelectedDate.HasValue || !dpdatadoevent_ate.SelectedDate.HasValue)
+            {
+                MessageBox.Show("Por favor, selecione a data de início e a data de término do evento.", "Atenção", MessageBoxButton.OK, MessageBoxImage.Warning);
+                return; // Sai do método para não continuar a criação
+            }
+
+
 
             DateTime novoInicio = dpdatadoevent.SelectedDate.Value;
             DateTime novoFim = dpdatadoevent_ate.SelectedDate.Value;
@@ -894,8 +901,14 @@ namespace GestaoDeEventos
                 return;
             }
 
-            
-            
+            if (!dpdatadoevent.SelectedDate.HasValue || !dpdatadoevent_ate.SelectedDate.HasValue)
+            {
+                MessageBox.Show("Por favor, selecione a data de início e a data de término do evento.", "Atenção", MessageBoxButton.OK, MessageBoxImage.Warning);
+                return; // Sai do método para não continuar a criação
+            }
+
+
+
             if (lbEventos.SelectedItem == null)
             {
                 MessageBox.Show("Selecione um evento para alterar.");

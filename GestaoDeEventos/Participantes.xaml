@@ -13,7 +13,7 @@
             </LinearGradientBrush>
         </Grid.Background>
         <TextBox x:Name="txtcnpjoucpf" Grid.ColumnSpan="2" HorizontalAlignment="Left" Margin="225,89,0,0" TextWrapping="Wrap" Text="" VerticalAlignment="Top" Width="294" Height="23" PreviewTextInput="txtcnpjoucpf_PreviewTextInput" DataObject.Pasting="txtcnpjoucpf_Pasting" MaxLength="14" />
-        <TextBox x:Name="txtnomepart" Grid.ColumnSpan="2" HorizontalAlignment="Left" Margin="225,127,0,0" TextWrapping="Wrap" Text="" VerticalAlignment="Top" Width="294" Height="23"/>
+        <TextBox x:Name="txtnomepart" Grid.ColumnSpan="2" HorizontalAlignment="Left" Margin="225,127,0,0" TextWrapping="Wrap" Text="" VerticalAlignment="Top" Width="294" Height="23" MaxLength="48"/>
         <Label Content="CPF/CNPJ" HorizontalAlignment="Left" Height="24" Margin="142,89,0,0" VerticalAlignment="Top" Width="78" FontWeight="Bold" Foreground="#FFFDFDFD"/>
         <Label Content="Nome" HorizontalAlignment="Left" Height="24" Margin="142,126,0,0" VerticalAlignment="Top" Width="78" FontWeight="Bold" Foreground="#FFFDFDFD"/>
         <ComboBox x:Name="cbparticipante" Grid.ColumnSpan="2" HorizontalAlignment="Left" Margin="225,55,0,0" VerticalAlignment="Top" Width="294" SelectionChanged="cbparticipante_SelectionChanged"  />
