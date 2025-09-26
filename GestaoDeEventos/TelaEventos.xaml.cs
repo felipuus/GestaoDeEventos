@@ -278,7 +278,7 @@ namespace GestaoDeEventos
             // Pega os participantes selecionados
             var selecionados = lbParticipantes.SelectedItems
                 .Cast<DataRowView>()
-                .Select(r => r["Nome"].ToString())
+                .Select(r => $"{r["Nome"]} Tipo: {r["Tipo"]}")
                 .ToList();
 
 
@@ -325,7 +325,7 @@ namespace GestaoDeEventos
                 {
                     con.Open();
                     // Seleciona os nomes dos participantes
-                    SqlCommand cmdselctforn = new SqlCommand("SELECT Nome,CPF_CNPJ FROM Participantes", con);
+                    SqlCommand cmdselctforn = new SqlCommand("SELECT Nome,CPF_CNPJ,Tipo,Telefone FROM Participantes", con);
                     SqlDataAdapter da = new SqlDataAdapter(cmdselctforn);
                     DataTable dt = new DataTable();
                     da.Fill(dt);
@@ -870,7 +870,7 @@ namespace GestaoDeEventos
                     // Atualizar TextBox resumo
                     var selecionados = lbParticipantes.SelectedItems
                         .Cast<DataRowView>()
-                        .Select(r => r["Nome"].ToString())
+                        .Select(r => $"{r["Nome"]} Tipo: {r["Tipo"]}")
                         .ToList();
 
                     txtParticipantes.Text = string.Join(", ", selecionados);

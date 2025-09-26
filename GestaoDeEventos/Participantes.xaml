@@ -12,18 +12,29 @@
                 <GradientStop Color="#FF14223A" Offset="1"/>
             </LinearGradientBrush>
         </Grid.Background>
-        <TextBox x:Name="txtcnpjoucpf" Grid.ColumnSpan="2" HorizontalAlignment="Left" Margin="225,89,0,0" TextWrapping="Wrap" Text="" VerticalAlignment="Top" Width="294" Height="23" PreviewTextInput="txtcnpjoucpf_PreviewTextInput" DataObject.Pasting="txtcnpjoucpf_Pasting" />
-        <TextBox x:Name="txtnomepart" Grid.ColumnSpan="2" HorizontalAlignment="Left" Margin="225,129,0,0" TextWrapping="Wrap" Text="" VerticalAlignment="Top" Width="294" Height="23"/>
+        <TextBox x:Name="txtcnpjoucpf" Grid.ColumnSpan="2" HorizontalAlignment="Left" Margin="225,89,0,0" TextWrapping="Wrap" Text="" VerticalAlignment="Top" Width="294" Height="23" PreviewTextInput="txtcnpjoucpf_PreviewTextInput" DataObject.Pasting="txtcnpjoucpf_Pasting" MaxLength="14" />
+        <TextBox x:Name="txtnomepart" Grid.ColumnSpan="2" HorizontalAlignment="Left" Margin="225,127,0,0" TextWrapping="Wrap" Text="" VerticalAlignment="Top" Width="294" Height="23"/>
         <Label Content="CPF/CNPJ" HorizontalAlignment="Left" Height="24" Margin="142,89,0,0" VerticalAlignment="Top" Width="78" FontWeight="Bold" Foreground="#FFFDFDFD"/>
-        <Label Content="Nome" HorizontalAlignment="Left" Height="24" Margin="142,128,0,0" VerticalAlignment="Top" Width="78" FontWeight="Bold" Foreground="#FFFDFDFD"/>
-        <ComboBox x:Name="cbparticipante" Grid.ColumnSpan="2" HorizontalAlignment="Left" Margin="225,53,0,0" VerticalAlignment="Top" Width="294" SelectionChanged="cbparticipante_SelectionChanged"  />
-        <Label x:Name="lbParticipantes" Content="Participantes" HorizontalAlignment="Left" Height="24" Margin="142,53,0,0" VerticalAlignment="Top" Width="78" FontWeight="Bold" Foreground="#FFFDFDFD"/>
+        <Label Content="Nome" HorizontalAlignment="Left" Height="24" Margin="142,126,0,0" VerticalAlignment="Top" Width="78" FontWeight="Bold" Foreground="#FFFDFDFD"/>
+        <ComboBox x:Name="cbparticipante" Grid.ColumnSpan="2" HorizontalAlignment="Left" Margin="225,55,0,0" VerticalAlignment="Top" Width="294" SelectionChanged="cbparticipante_SelectionChanged"  />
+        <Label x:Name="lbParticipantes" Content="Participantes" HorizontalAlignment="Left" Height="24" Margin="142,54,0,0" VerticalAlignment="Top" Width="78" FontWeight="Bold" Foreground="#FFFDFDFD"/>
         <Button x:Name="btconsultarpart" Content="Consultar" HorizontalAlignment="Left" Margin="36,3,0,0" VerticalAlignment="Top" Height="25" Width="68" Background="#38ada9" FontSize="14" Foreground="#FF080808" Cursor="Hand" Grid.ColumnSpan="2" Grid.Column="2" Click="btconsultarpart_Click"   />
         <Button x:Name="btalterarpart" Content="Alterar" HorizontalAlignment="Left" Margin="31,3,0,0" VerticalAlignment="Top" Height="25" Width="68" Background="#38ada9" FontSize="14" Foreground="#FF080808" Cursor="Hand" Grid.Column="3" Click="btalterarpart_Click"   />
         <Button x:Name="btcriarpart" Grid.Column="3" Content="Criar" HorizontalAlignment="Left" Margin="104,3,0,0" VerticalAlignment="Top" Height="25" Width="68" Background="#38ada9" FontSize="14" Foreground="#FF080808" Cursor="Hand" Click="btcriarpart_Click"  />
         <Button x:Name="btcancelarpart" Grid.Column="3" Content="Cancelar" HorizontalAlignment="Left" Margin="31,32,0,0" VerticalAlignment="Top" Height="25" Width="68" Background="#FFCC3E09" FontSize="14" Foreground="#FF080808" Cursor="Hand" Click="btcancelarpart_Click"/>
         <Button x:Name="btexcluirpart" Grid.Column="3" Content="Excluir" HorizontalAlignment="Left" Margin="104,32,0,0" VerticalAlignment="Top" Height="25" Width="68" Background="#FFCC3E09" FontSize="14" Foreground="#FF080808" Cursor="Hand" Click="btexcluirpart_Click"  />
-
-
+        <Label Content="Tipo" HorizontalAlignment="Left" Height="24" Margin="142,164,0,0" VerticalAlignment="Top" Width="78" FontWeight="Bold" Foreground="#FFFDFDFD"/>
+        <Label Content="Telefone" HorizontalAlignment="Left" Height="24" Margin="142,197,0,0" VerticalAlignment="Top" Width="78" FontWeight="Bold" Foreground="#FFFDFDFD"/>
+        <TextBox x:Name="txttelefone" Grid.ColumnSpan="2" HorizontalAlignment="Left" Margin="225,197,0,0" TextWrapping="Wrap" Text="" VerticalAlignment="Top" Width="294" Height="23" PreviewTextInput="txttelefone_PreviewTextInput"  DataObject.Pasting="txttelefone_Pasting"  PreviewKeyDown="txttelefone_PreviewKeyDown" MaxLength="12" />
+        <ComboBox x:Name="cbTipoParticipante"
+          HorizontalAlignment="Left"
+          Margin="225,162,0,0"
+          VerticalAlignment="Top"
+          Width="294"
+          Grid.ColumnSpan="2">
+            <ComboBoxItem Content="VIP"/>
+            <ComboBoxItem Content="Interno"/>
+            <ComboBoxItem Content="Externo"/>
+        </ComboBox>
     </Grid>
 </Window>

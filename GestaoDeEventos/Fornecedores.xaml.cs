@@ -280,7 +280,12 @@ namespace GestaoDeEventos
                             MessageBox.Show("Já existe um fornecedor com esse CPF/CNPJ cadastrado.");
                             return;
                         }
+
+
                     }
+
+
+
 
                     // Se não existir, faz o insert
                     string sql = "INSERT INTO Fornecedores (CPF_CNPJ, Nome, Preco) VALUES (@CPF_CNPJ, @Nome, @Preco)";
@@ -386,18 +391,37 @@ namespace GestaoDeEventos
 
         private void btexcluirforn_Click(object sender, RoutedEventArgs e)
         {
-            sumirbtexcluirforn();
+            
+
             try
             {
+
+
+
                 using (SqlConnection con = Banco.GetConexao())
                 {
                     con.Open();
-                    // Faz o DELETE
-                    string sql = "DELETE FROM Fornecedores WHERE CPF_CNPJ = @CPF_CNPJ";
-                    using (SqlCommand cmd = new SqlCommand(sql, con))
+
+                    // Primeiro verifica se o fornecedor está vinculado em foreventos
+                    string sqlCheck = "SELECT COUNT(*) FROM foreventos WHERE Cod_forn = @CPF_CNPJ";
+                    using (SqlCommand cmdCheck = new SqlCommand(sqlCheck, con))
                     {
-                        cmd.Parameters.AddWithValue("@CPF_CNPJ", txtcnpjoucpf.Text.Trim());
-                        int linhasAfetadas = cmd.ExecuteNonQuery();
+                        cmdCheck.Parameters.AddWithValue("@CPF_CNPJ", txtcnpjoucpf.Text.Trim());
+                        int count = (int)cmdCheck.ExecuteScalar();
+
+                        if (count > 0)
+                        {
+                            MessageBox.Show("Não é possível excluir este fornecedor, pois ele está vinculado a um evento.");
+                            return; // Sai do método, não faz o delete
+                        }
+                    }
+
+                    // Se chegou aqui, pode excluir
+                    string sqlDelete = "DELETE FROM Fornecedores WHERE CPF_CNPJ = @CPF_CNPJ";
+                    using (SqlCommand cmdDel = new SqlCommand(sqlDelete, con))
+                    {
+                        cmdDel.Parameters.AddWithValue("@CPF_CNPJ", txtcnpjoucpf.Text.Trim());
+                        int linhasAfetadas = cmdDel.ExecuteNonQuery();
                         if (linhasAfetadas > 0)
                         {
                             MessageBox.Show("Fornecedor excluído com sucesso!");
