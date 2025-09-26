@@ -6,11 +6,17 @@
     <Nullable>enable</Nullable>
     <ImplicitUsings>enable</ImplicitUsings>
     <UseWPF>true</UseWPF>
+    <ApplicationIcon>icone_projeto.ico</ApplicationIcon>
   </PropertyGroup>
 
   <ItemGroup>
     <None Remove="1fb9bdf7-428a-41f2-9494-41b1503d1762.png" />
+    <None Remove="icone_projeto.ico" />
     <None Remove="Logo de Sistema de Eventos.png" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Content Include="icone_projeto.ico" />
   </ItemGroup>
 
   <ItemGroup>
