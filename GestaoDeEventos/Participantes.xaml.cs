@@ -88,6 +88,15 @@ namespace GestaoDeEventos
             btalterarpart.IsEnabled = true;
         }
 
+        private void desativarbtcriar()
+        {
+            btcriarpart.IsEnabled = false;
+        }
+        private void ativarbtcriar()
+        {
+            btcriarpart.IsEnabled = true;
+        }
+
         private void limparcampospart()
         {
             txtcnpjoucpf.Clear();
@@ -169,6 +178,7 @@ namespace GestaoDeEventos
             exibirbtexcluirpart();
             ativarbtalterar();
             carregarparticipantes();
+            desativarbtcriar();
 
 
 
@@ -177,6 +187,22 @@ namespace GestaoDeEventos
 
         private void btalterarpart_Click(object sender, RoutedEventArgs e)
         {
+
+            // Validação básica dos campos obrigatórios
+            if (string.IsNullOrWhiteSpace(txtcnpjoucpf.Text))
+            {
+                MessageBox.Show("Informe o CPF/CNPJ do participante.");
+                txtcnpjoucpf.Focus();
+                return;
+            }
+
+            if (string.IsNullOrWhiteSpace(txtnomepart.Text))
+            {
+                MessageBox.Show("Informe o nome do participante.");
+                txtnomepart.Focus();
+                return;
+            }
+
             try
             {
                 using (SqlConnection con = Banco.GetConexao())
@@ -216,6 +242,7 @@ namespace GestaoDeEventos
                 sumirbtexcluirpart();
                 desativarbtalterar();
                 ativarcpfcnpj();
+                ativarbtcriar();
 
 
             }
@@ -233,10 +260,28 @@ namespace GestaoDeEventos
             sumirbtexcluirpart();
             desativarbtalterar();
             ativarcpfcnpj();
+            ativarbtcriar();
         }
 
         private void btcriarpart_Click(object sender, RoutedEventArgs e)
         {
+
+           
+            if (string.IsNullOrWhiteSpace(txtcnpjoucpf.Text))
+            {
+                MessageBox.Show("Informe o CPF/CNPJ do participante.");
+                txtcnpjoucpf.Focus();
+                return;
+            }
+
+            if (string.IsNullOrWhiteSpace(txtnomepart.Text))
+            {
+                MessageBox.Show("Informe o nome do participante.");
+                txtnomepart.Focus();
+                return;
+            }
+
+
             try
             {
                 using (SqlConnection con = Banco.GetConexao())
@@ -319,6 +364,7 @@ namespace GestaoDeEventos
                 sumirbtexcluirpart();
                 desativarbtalterar();
                 ativarcpfcnpj();
+                ativarbtcriar();
             }
             catch (Exception ex)
             {

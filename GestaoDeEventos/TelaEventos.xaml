@@ -9,7 +9,7 @@
         <Grid.Background>
             <LinearGradientBrush StartPoint="0,0" EndPoint="0,1">
                 <GradientStop Color="#4A69BD" Offset="0"/>
-                <GradientStop Color="#FF27549E" Offset="1"/>
+                <GradientStop Color="#FF14223A" Offset="1"/>
             </LinearGradientBrush>
         </Grid.Background>
         <Label Content="Nome do Evento" HorizontalAlignment="Left" Height="24" Margin="10,43,0,0" VerticalAlignment="Top" Width="129" FontWeight="Bold" Foreground="#FFFDFDFD"/>

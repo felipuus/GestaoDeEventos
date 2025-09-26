@@ -426,6 +426,14 @@ namespace GestaoDeEventos
         private void btcriareventos_Click(object sender, RoutedEventArgs e)
         {
 
+            if (string.IsNullOrWhiteSpace(txtnomedoevento.Text))
+            {
+                MessageBox.Show("Informe o nome do Evento.");
+                txtnomedoevento.Focus();
+                return;
+            }
+
+
             DateTime novoInicio = dpdatadoevent.SelectedDate.Value;
             DateTime novoFim = dpdatadoevent_ate.SelectedDate.Value;
 
@@ -878,6 +886,16 @@ namespace GestaoDeEventos
 
         private void btalterareventos_Click(object sender, RoutedEventArgs e)
         {
+          
+            if (string.IsNullOrWhiteSpace(txtnomedoevento.Text))
+            {
+                MessageBox.Show("Informe o nome do Evento.");
+                txtnomedoevento.Focus();
+                return;
+            }
+
+            
+            
             if (lbEventos.SelectedItem == null)
             {
                 MessageBox.Show("Selecione um evento para alterar.");

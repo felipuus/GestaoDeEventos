@@ -73,6 +73,16 @@ namespace GestaoDeEventos
             btalterarpart.IsEnabled = true;
         }
 
+        private void desativarbtcriar()
+        {
+            btcriarpart.IsEnabled = false;
+        }
+
+        private void ativarbtcriar()
+        {
+            btcriarpart.IsEnabled = true;
+        }
+
         private void limparcampospart()
         {
             txtnometipoevento.Clear();
@@ -132,6 +142,7 @@ namespace GestaoDeEventos
             exibirbtexcluirpart();
             ativarbtalterar();
             limparcampospart();
+            desativarbtcriar();
 
 
 
@@ -139,6 +150,12 @@ namespace GestaoDeEventos
 
         private void btalterarpart_Click(object sender, RoutedEventArgs e)
         {
+            if (string.IsNullOrWhiteSpace(txtnometipoevento.Text))
+            {
+                MessageBox.Show("Informe o nome do tipo de evento antes de salvar!");
+                return;
+            }
+
             try
             {
                 using (SqlConnection con = Banco.GetConexao())
@@ -177,7 +194,8 @@ namespace GestaoDeEventos
                 sumirbtcancelarpart();
                 sumirbtexcluirpart();
                 desativarbtalterar();
-                
+                ativarbtcriar();
+
 
 
             }
@@ -190,6 +208,8 @@ namespace GestaoDeEventos
 
         private void btcriarpart_Click(object sender, RoutedEventArgs e)
         {
+
+
             try
             {
                 if (string.IsNullOrWhiteSpace(txtnometipoevento.Text))
@@ -239,7 +259,8 @@ namespace GestaoDeEventos
             sumirbtcancelarpart();
             sumirbtexcluirpart();
             desativarbtalterar();
-           
+            ativarbtcriar();
+
         }
 
         private void btexcluirpart_Click(object sender, RoutedEventArgs e)
@@ -271,7 +292,8 @@ namespace GestaoDeEventos
                 sumirbtcancelarpart();
                 sumirbtexcluirpart();
                 desativarbtalterar();
-                
+                ativarbtcriar();
+
             }
             catch (Exception ex)
             {

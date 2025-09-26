@@ -9,11 +9,9 @@
         <Grid.Background>
             <LinearGradientBrush StartPoint="0,0" EndPoint="0,1">
                 <GradientStop Color="#4A69BD" Offset="0"/>
-                <GradientStop Color="#FF27549E" Offset="1"/>
+                <GradientStop Color="#FF14223A" Offset="1"/>
             </LinearGradientBrush>
         </Grid.Background>
-        <Label Content="ID FORNECEDOR" HorizontalAlignment="Left" Height="24" Margin="7,1,0,0" VerticalAlignment="Top" Width="112" FontWeight="Bold" Foreground="#FFFDFDFD"/>
-        <TextBox x:Name="txtidforn" HorizontalAlignment="Left" Margin="119,3,0,0" TextWrapping="Wrap" Text="" VerticalAlignment="Top" Width="72" Height="21" IsEnabled="False"/>
         <TextBox x:Name="txtcnpjoucpf" Grid.ColumnSpan="2" HorizontalAlignment="Left" Margin="225,89,0,0" TextWrapping="Wrap" Text="" VerticalAlignment="Top" Width="294" Height="23" PreviewTextInput="txtcnpjoucpf_PreviewTextInput" DataObject.Pasting="txtcnpjoucpf_Pasting"/>
         <TextBox x:Name="txtnomeforn" Grid.ColumnSpan="2" HorizontalAlignment="Left" Margin="225,129,0,0" TextWrapping="Wrap" Text="" VerticalAlignment="Top" Width="294" Height="23"/>
         <TextBox x:Name="precoforn" HorizontalAlignment="Left" Margin="225,178,0,0" TextWrapping="Wrap" Text="0" VerticalAlignment="Top" Width="294" Height="24" Grid.ColumnSpan="2" TextChanged="percoforn_TextChanged" />

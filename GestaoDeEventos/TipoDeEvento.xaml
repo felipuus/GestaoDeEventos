@@ -9,7 +9,7 @@
         <Grid.Background>
             <LinearGradientBrush StartPoint="0,0" EndPoint="0,1">
                 <GradientStop Color="#4A69BD" Offset="0"/>
-                <GradientStop Color="#FF27549E" Offset="1"/>
+                <GradientStop Color="#FF14223A" Offset="1"/>
             </LinearGradientBrush>
         </Grid.Background>
         <TextBox x:Name="txtnometipoevento" Grid.ColumnSpan="2" HorizontalAlignment="Left" Margin="225,89,0,0" TextWrapping="Wrap" Text="" VerticalAlignment="Top" Width="294" Height="23" />

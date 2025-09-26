@@ -235,9 +235,24 @@ namespace GestaoDeEventos
 
         private void btcriarforn_Click(object sender, RoutedEventArgs e)
         {
+            // Validação básica dos campos obrigatórios
+            if (string.IsNullOrWhiteSpace(txtcnpjoucpf.Text))
+            {
+                MessageBox.Show("Informe o CPF/CNPJ do Fornecedor.");
+                txtcnpjoucpf.Focus();
+                return;
+            }
+
+            if (string.IsNullOrWhiteSpace(txtnomeforn.Text))
+            {
+                MessageBox.Show("Informe o nome do Fornecedor.");
+                txtnomeforn.Focus();
+                return;
+            }
+
+
             string cpfCnpj = txtcnpjoucpf.Text.Trim();
            
-
             // Valida se o CPF/CNPJ é numérico
             if (!cpfCnpj.All(char.IsDigit))
             {
@@ -304,7 +319,20 @@ namespace GestaoDeEventos
 
         private void btalterarforn_Click(object sender, RoutedEventArgs e)
         {
+            // Validação básica dos campos obrigatórios
+            if (string.IsNullOrWhiteSpace(txtcnpjoucpf.Text))
+            {
+                MessageBox.Show("Informe o CPF/CNPJ do Fornecedor.");
+                txtcnpjoucpf.Focus();
+                return;
+            }
 
+            if (string.IsNullOrWhiteSpace(txtnomeforn.Text))
+            {
+                MessageBox.Show("Informe o nome do Fornecedor.");
+                txtnomeforn.Focus();
+                return;
+            }
 
             try
             {

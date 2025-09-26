@@ -1,4 +1,4 @@
-﻿<Window x:Class="GestaoDeEventos.Participantes" xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation" xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml" xmlns:d="http://schemas.microsoft.com/expression/blend/2008" xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" xmlns:local="clr-namespace:GestaoDeEventos" mc:Ignorable="d" Title="Fornecedores" Height="450" Width="800" ResizeMode="NoResize" WindowStartupLocation="CenterScreen" Icon="/ChatGPT Image 16 de set. de 2025, 14_26_26.png" Background="#FF151365">
+﻿<Window x:Class="GestaoDeEventos.Participantes" xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation" xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml" xmlns:d="http://schemas.microsoft.com/expression/blend/2008" xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" xmlns:local="clr-namespace:GestaoDeEventos" mc:Ignorable="d" Title="Participantes" Height="450" Width="800" ResizeMode="NoResize" WindowStartupLocation="CenterScreen" Icon="/ChatGPT Image 16 de set. de 2025, 14_26_26.png" Background="#FF151365">
     <Grid x:Name="TxtEnderecoEvent" Width="800" Margin="0,0,0,-6" Cursor="">
         <Grid.ColumnDefinitions>
             <ColumnDefinition Width="391*"/>
@@ -9,7 +9,7 @@
         <Grid.Background>
             <LinearGradientBrush StartPoint="0,0" EndPoint="0,1">
                 <GradientStop Color="#4A69BD" Offset="0"/>
-                <GradientStop Color="#FF27549E" Offset="1"/>
+                <GradientStop Color="#FF14223A" Offset="1"/>
             </LinearGradientBrush>
         </Grid.Background>
         <TextBox x:Name="txtcnpjoucpf" Grid.ColumnSpan="2" HorizontalAlignment="Left" Margin="225,89,0,0" TextWrapping="Wrap" Text="" VerticalAlignment="Top" Width="294" Height="23" PreviewTextInput="txtcnpjoucpf_PreviewTextInput" DataObject.Pasting="txtcnpjoucpf_Pasting" />

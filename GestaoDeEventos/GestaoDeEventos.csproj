@@ -10,11 +10,11 @@
 
   <ItemGroup>
     <None Remove="1fb9bdf7-428a-41f2-9494-41b1503d1762.png" />
-    <None Remove="ChatGPT Image 16 de set. de 2025, 14_26_26.png" />
     <None Remove="Logo de Sistema de Eventos.png" />
   </ItemGroup>
 
   <ItemGroup>
+    <PackageReference Include="Microsoft.ReportingServices.ReportViewerControl.Winforms" Version="150.1652.0" />
     <PackageReference Include="Newtonsoft.Json" Version="13.0.4" />
     <PackageReference Include="System.Data.SqlClient" Version="4.9.0" />
   </ItemGroup>
@@ -23,6 +23,10 @@
     <Resource Include="1fb9bdf7-428a-41f2-9494-41b1503d1762.png" />
     <Resource Include="ChatGPT Image 16 de set. de 2025, 14_26_26.png" />
     <Resource Include="Logo de Sistema de Eventos.png" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Service Include="{508349b6-6b84-4df5-91f0-309beebad82d}" />
   </ItemGroup>
 
 </Project>
