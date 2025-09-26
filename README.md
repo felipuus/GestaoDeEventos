@@ -25,7 +25,7 @@ GestaoDeEventos.exe
 
 será aberto a tela de login, mas ela no momento é uma tela de teste. pode seguir confirmando sem informar o login.
 
-<img src="https://drive.google.com/file/d/1jhF3DAot_M0f7H4QAuyVbwpI-53Vidaa/preview" alt="Tela Principal">
+<img src="[https://drive.google.com/file/d/1jhF3DAot_M0f7H4QAuyVbwpI-53Vidaa/preview](https://photos.fife.usercontent.google.com/pw/AP1GczMnzjZCIWqpXY2lB7LMbRWGIfXhVrOAd6Eh8w0AiOboCqc2kkq1O71H=w410-h229-s-no-gm?authuser=0)" alt="Tela Principal">
 
 Antes de cadastrar um evento precisamos cadastrar os fornecedores, Participantes e Tipo de Evento
 
