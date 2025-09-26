@@ -7,6 +7,7 @@ Sistema para registro e controle de eventos.
 
 [📥 Download](https://drive.google.com/file/d/1oq6ObgpFI1cLnoV3AFczZT9c8G9zJuo0/view?usp=drive_link)
 
+
 Antes de Iniciar o projeto é importante configurar o arquivo que está dentro da pasta principal do sistema, o arquivo: config.ini
 
 [Banco]
