@@ -43,6 +43,18 @@ Apos ter os dados necessario para cadastrar um evento pode retornar a tela princ
 
 A tela segue a mesmo padrão de cadastro,alteração e exclusão das telas anteriores.
 
+## Observação
+
+O sistema não está concluido, ainda não está habilitado: 
+
+validação e cadastro de usuario
+Relatorios
+Tabelas Relacionadas
+Trativas para excluir cadastro de fornecedor, participante, e tipo de eventos que estão em eventos.
+
+
+
+
 
 
 
