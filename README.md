@@ -61,6 +61,16 @@ Para cadastrar o evento precisa preencher os campos e Clicar em **Criar**
 
 A consulta permite realizar alteração e exclusão :point_up_2:
 
+## Observação 🚨
+
+### Falta concluir: 🚧
+
+Validação e cadastro de usuario
+
+Tela de relatorios
+
+
+
 
 
 
